@@ -5,6 +5,7 @@ module com.giahuy.createfile {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens com.giahuy.createfile to javafx.fxml;
     exports com.giahuy.createfile;

@@ -2,14 +2,20 @@ package com.giahuy.createfile;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-public class IOController {
+
+public class IOController extends Component {
 
     @FXML
     private AnchorPane anchorpane;
@@ -41,12 +47,12 @@ public class IOController {
     }
     private String listAllFiles(String path, int level){
         File myFile = new File(path);
-        if (myFile.exists()) {return "";}
+        if (!myFile.exists()) {return "" ;}
         String result = "";
         for (int i =0; i < level; i++){
             result+="\t";
         }
-        result +=((level==0?"":"|_") + myFile.getName() + "\n");
+        result = result + ((level == 0 ?"":"|_") + myFile.getName() + "\n");
         if (myFile.isFile()) return myFile.getName();
 
         for(File f : myFile.listFiles()){
@@ -98,6 +104,13 @@ public class IOController {
         if(file1 != null){
             String path = file1.getAbsolutePath();
             txt_File.setText(path);
+        }
+        try{
+            String path = file1.getAbsolutePath();
+            long size = Files.size(Path.of(path));
+            txt_size.setText(size +" KB");
+        }catch (Exception e){
+            txt_size.setText("Error: " + e.getMessage());
         }
     }
     public void deletebtn(){
